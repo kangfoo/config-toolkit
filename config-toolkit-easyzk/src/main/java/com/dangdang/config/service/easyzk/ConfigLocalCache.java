@@ -74,7 +74,8 @@ public class ConfigLocalCache {
 			for (Entry<String, String> entry : data.entrySet()) {
 				properties.put(entry.getKey(), entry.getValue());
 			}
-			try (Writer writer = new OutputStreamWriter(new FileOutputStream(localFilePath), Charsets.UTF_8)) {
+			try {
+                Writer writer = new OutputStreamWriter(new FileOutputStream(localFilePath), Charsets.UTF_8);
 				properties.store(writer, String.format("Local cache of configs group: %s", node));
 			} catch (IOException e) {
 				LOGGER.error(e.getMessage(), e);

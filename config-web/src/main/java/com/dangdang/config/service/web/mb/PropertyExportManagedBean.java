@@ -73,7 +73,8 @@ public class PropertyExportManagedBean {
 			String groupPath = ZKPaths.makePath(nodeAuth.getAuthedNode(), groupName);
 			Properties properties = childrenToProperties(groupPath);
 			if (!properties.isEmpty()) {
-				try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+				try {
+                    ByteArrayOutputStream out = new ByteArrayOutputStream();
 					properties.store(out, String.format("Export from zookeeper configuration group: [%s].", groupName));
 					InputStream in = new ByteArrayInputStream(out.toByteArray());
 
@@ -105,8 +106,10 @@ public class PropertyExportManagedBean {
 		String authedNode = nodeAuth.getAuthedNode();
 		List<String> children = nodeService.listChildren(authedNode);
 		if (children != null && !children.isEmpty()) {
-			try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-				try (ZipOutputStream zipOutputStream = new ZipOutputStream(out)) {
+			try {
+                ByteArrayOutputStream out = new ByteArrayOutputStream();
+                ZipOutputStream zipOutputStream = new ZipOutputStream(out);
+
 					for (String child : children) {
 						String groupPath = ZKPaths.makePath(authedNode, child);
 						String fileName = ZKPaths.getNodeFromPath(groupPath) + ".properties";
@@ -125,12 +128,10 @@ public class PropertyExportManagedBean {
 
 					String fileName = authedNode + ".zip";
 					file = new DefaultStreamedContent(in, "application/zip", fileName, Charsets.UTF_8.name());
-				}
-			} catch (IOException e) {
-				LOGGER.error(e.getMessage(), e);
-			}
-		}
-
+				} catch (IOException e) {
+                LOGGER.error(e.getMessage(), e);
+            }
+        }
 		return file;
 	}
 

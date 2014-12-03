@@ -29,7 +29,8 @@ import com.google.common.base.Preconditions;
 public class MainEntrance {
 
 	public static void main(String[] args) {
-		try (ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:config-toolkit-easyzk.xml")) {
+		try {
+            ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:config-toolkit-easyzk.xml");
 			context.registerShutdownHook();
 			context.start();
 

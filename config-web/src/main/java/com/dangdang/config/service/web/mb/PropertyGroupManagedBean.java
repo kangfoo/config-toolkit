@@ -160,7 +160,8 @@ public class PropertyGroupManagedBean implements Serializable, IObserver {
 		String fileName = event.getFile().getFileName();
 		LOGGER.info("Deal uploaded file: {}", fileName);
 		String group = Files.getNameWithoutExtension(fileName);
-		try (InputStream inputstream = event.getFile().getInputstream()) {
+		try {
+            InputStream inputstream = event.getFile().getInputstream();
 			savePropertyGroup(fileName, group, inputstream);
 		} catch (IOException e) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Failed", fileName + " parse error."));
@@ -198,7 +199,8 @@ public class PropertyGroupManagedBean implements Serializable, IObserver {
 	public void propertyZipUpload(FileUploadEvent event) {
 		String fileName = event.getFile().getFileName();
 		LOGGER.info("Deal uploaded file: {}", fileName);
-		try (ZipInputStream zipInputStream = new ZipInputStream(event.getFile().getInputstream())) {
+		try {
+            ZipInputStream zipInputStream = new ZipInputStream(event.getFile().getInputstream());
 			ZipEntry nextEntry = null;
 			while ((nextEntry = zipInputStream.getNextEntry()) != null) {
 				String entryName = nextEntry.getName();
