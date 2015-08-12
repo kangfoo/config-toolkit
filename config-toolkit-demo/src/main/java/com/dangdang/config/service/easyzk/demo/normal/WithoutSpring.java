@@ -15,9 +15,12 @@
  */
 package com.dangdang.config.service.easyzk.demo.normal;
 
-import com.dangdang.config.service.easyzk.ConfigFactory;
-import com.dangdang.config.service.easyzk.ConfigNode;
+import java.io.IOException;
+
+import com.dangdang.config.service.GeneralConfigGroup;
 import com.dangdang.config.service.observer.IObserver;
+import com.dangdang.config.service.zookeeper.ZookeeperConfigGroup;
+import com.dangdang.config.service.zookeeper.ZookeeperConfigProfile;
 import com.google.common.base.Preconditions;
 
 /**
@@ -27,21 +30,27 @@ import com.google.common.base.Preconditions;
 public class WithoutSpring {
 
 	public static void main(String[] args) {
-		ConfigFactory configFactory = new ConfigFactory("127.0.0.1", "/projectx/modulex");
-
-		ConfigNode propertyGroup1 = configFactory.getConfigNode("property-group1");
+		ZookeeperConfigProfile configProfile = new ZookeeperConfigProfile("zoo.host1:8181", "/projectx/modulex", "1.0.0");
+		GeneralConfigGroup propertyGroup1 = new ZookeeperConfigGroup(configProfile, "property-group1");
 		System.out.println(propertyGroup1);
-		
+
 		// Listen changes
 		propertyGroup1.register(new IObserver() {
 			@Override
-			public void notifiy(String data, String value) {
+			public void notified(String data, String value) {
 				// Some initialization
 			}
 		});
 
-		Preconditions.checkState("Welcome".equals(propertyGroup1.getProperty("string_property_key")));
-		Preconditions.checkState(1123 == Integer.parseInt(propertyGroup1.getProperty("int_property_key")));
+		String stringProperty = propertyGroup1.get("string_property_key");
+		Preconditions.checkState("Config-Toolkit".equals(stringProperty));
+		String intProperty = propertyGroup1.get("int_property_key");
+		Preconditions.checkState(1123 == Integer.parseInt(intProperty));
+
+		try {
+			propertyGroup1.close();
+		} catch (IOException e) {
+		}
 	}
 
 }
