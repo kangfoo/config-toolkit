@@ -1,11 +1,13 @@
 package com.dangdang.config.service.file.contenttype;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.Map;
 import java.util.Properties;
 
+import com.dangdang.config.service.exception.InvalidPathException;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Maps;
@@ -37,10 +39,18 @@ public final class ContentTypes {
 			URL registerFile = null;
 			while (registerFiles.hasMoreElements()) {
 				registerFile = registerFiles.nextElement();
-				try (InputStream in = registerFile.openStream()) {
-					props.load(in);
-				}
-			}
+                InputStream in = null;
+                try {
+                    in = registerFile.openStream();
+                    props.load(in);
+                } catch (IOException e) {
+                    throw new InvalidPathException(e);
+                } finally {
+                    if (in!=null){
+                        in.close();
+                    }
+                }
+            }
 
 			// Initialize protocol beans
 			contentTypes = Maps.newHashMap();

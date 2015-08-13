@@ -27,11 +27,21 @@ public class XmlContentType implements ContentType {
 	@Override
 	public Map<String, String> resolve(byte[] data, String encoding) throws InvalidPathException {
 		Properties props = new Properties();
-		try (InputStream in = new ByteArrayInputStream(data)) {
+        InputStream in = null;
+        try {
+            in = new ByteArrayInputStream(data);
 			props.loadFromXML(in);
 		} catch (IOException e) {
 			throw new InvalidPathException(e);
-		}
+		} finally {
+            if (in!=null){
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    throw new InvalidPathException(e);
+                }
+            }
+        }
 
 		return Maps.fromProperties(props);
 	}

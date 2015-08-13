@@ -20,11 +20,21 @@ public class PropertiesContentType implements ContentType {
 	@Override
 	public Map<String, String> resolve(byte[] data, String encoding) throws InvalidPathException {
 		Properties props = new Properties();
-		try (Reader reader = new InputStreamReader(new ByteArrayInputStream(data), encoding)) {
-			props.load(reader);
+        Reader reader = null;
+        try {
+            reader = new InputStreamReader(new ByteArrayInputStream(data), encoding);
+            props.load(reader);
 		} catch (IOException e) {
 			throw new InvalidPathException(e);
-		}
+		} finally {
+            if (reader!=null){
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    throw new InvalidPathException(e);
+                }
+            }
+        }
 
 		return Maps.fromProperties(props);
 	}
