@@ -23,4 +23,7 @@ public class ExampleBeanWithConfigNode {
 		System.out.println(propertyGroup1.get("string_property_key"));
 	}
 
+    public void setPropertyGroup1(Map<String, String> propertyGroup1) {
+        this.propertyGroup1 = propertyGroup1;
+    }
 }

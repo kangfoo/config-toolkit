@@ -207,3 +207,10 @@ Config Web 提供界面方便管理zookeeper中的配置数据.
 > `echo "set /aaa/bbb a9993e364706816aba3e25717850c26c9cd0d89d" |./zkCli.sh -server localhost:2181`
 
 ![Config Web Snapshot](http://crnlmchina.github.io/config-web2.jpg)
+
+#### 运行示例程序说明
+
+启动 Config Web
+先手工在 zk 中新建节点 `create /projectx , create /projectx/modulex`
+再执行 `echo "set /aaa/bbb a9993e364706816aba3e25717850c26c9cd0d89d" |./zkCli.sh -server localhost:2181`
+即可登录网站设置值，并逐一运行 config-toolkit-demo 中的示例程序。

@@ -14,7 +14,7 @@ public class LocalCacheCase {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		ZookeeperConfigProfile profile = new ZookeeperConfigProfile("zk.host", "/projectx/modulex", true);
+		ZookeeperConfigProfile profile = new ZookeeperConfigProfile("localhost:2181", "/projectx/modulex", true);
 		profile.setLocalCacheFolder("/your/local/config/folder");
 		
 		ConfigGroup dbConfigs = new ZookeeperConfigGroup(null, profile, "db");

@@ -30,7 +30,7 @@ import com.google.common.base.Preconditions;
 public class WithoutSpring {
 
 	public static void main(String[] args) {
-		ZookeeperConfigProfile configProfile = new ZookeeperConfigProfile("zoo.host1:8181", "/projectx/modulex", "1.0.0");
+		ZookeeperConfigProfile configProfile = new ZookeeperConfigProfile("localhost:2181", "/projectx/modulex", "1.0.0");
 		GeneralConfigGroup propertyGroup1 = new ZookeeperConfigGroup(configProfile, "property-group1");
 		System.out.println(propertyGroup1);
 
@@ -45,7 +45,7 @@ public class WithoutSpring {
 		String stringProperty = propertyGroup1.get("string_property_key");
 		Preconditions.checkState("Config-Toolkit".equals(stringProperty));
 		String intProperty = propertyGroup1.get("int_property_key");
-		Preconditions.checkState(1123 == Integer.parseInt(intProperty));
+		Preconditions.checkState(123456789 == Integer.parseInt(intProperty));
 
 		try {
 			propertyGroup1.close();
