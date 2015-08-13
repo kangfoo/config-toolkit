@@ -22,8 +22,14 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring.io.platform.version>1.1.2.RELEASE</spring.io.platform.version>
-		<apache.commons-collections.version>4.0</apache.commons-collections.version>
+		<!--<spring.io.platform.version>1.1.2.RELEASE</spring.io.platform.version>-->
+        <spring.bom.version>3.2.9.RELEASE</spring.bom.version>
+        <guava.version>17.0</guava.version>
+        <commons-io.version>2.4</commons-io.version>
+        <commons-lang3.version>3.3.2</commons-lang3.version>
+        <jline.version>2.11</jline.version>
+
+        <apache.commons-collections.version>4.0</apache.commons-collections.version>
 		<druid.version>1.0.7</druid.version>
 		<curator.version>2.6.0</curator.version>
 		<cglib.version>2.2.2</cglib.version>
@@ -45,14 +51,41 @@
 				<version>3.0.0-RELEASE</version>
 			</dependency>
 
-			<dependency>
-				<groupId>io.spring.platform</groupId>
-				<artifactId>platform-bom</artifactId>
-				<version>${spring.io.platform.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-			<dependency>
+			<!--<dependency>-->
+				<!--<groupId>io.spring.platform</groupId>-->
+				<!--<artifactId>platform-bom</artifactId>-->
+				<!--<version>${spring.io.platform.version}</version>-->
+				<!--<type>pom</type>-->
+				<!--<scope>import</scope>-->
+			<!--</dependency>-->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-framework-bom</artifactId>
+                <version>${spring.bom.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>jline</groupId>
+                <artifactId>jline</artifactId>
+                <version>${jline.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
+            </dependency>
+            <dependency>
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-collections4</artifactId>
 				<version>${apache.commons-collections.version}</version>
